@@ -2,22 +2,28 @@ package study.ian.redso.view
 
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
+import android.text.SpannableString
+import android.text.SpannableStringBuilder
+import android.text.Spanned
+import android.text.style.ForegroundColorSpan
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
+import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
 import io.reactivex.disposables.Disposable
 import study.ian.redso.R
-import study.ian.redso.contractor.MainActivityContractor
-import study.ian.redso.presenter.MainActivityPresenter
 import study.ian.redso.service.ServiceBuilder
-import study.ian.redso.util.ObserverHelper
+import study.ian.redso.util.ContentPagerAdapter
 
-class MainActivity : AppCompatActivity(), MainActivityContractor.View {
+class MainActivity : AppCompatActivity() {
+
     private val tag = "MainActivity"
 
     private var disposable: Disposable? = null
-    private var presenter: MainActivityPresenter? = null
     private lateinit var tabLayout: TabLayout
+    private lateinit var toolbar: Toolbar
+    private lateinit var contentPager: ViewPager
     private var teams = arrayOf("Rangers", "Elastic", "Dynamo")
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,25 +33,13 @@ class MainActivity : AppCompatActivity(), MainActivityContractor.View {
         ServiceBuilder.watchNetworkState(this)
 
         findViews()
-        presenter = MainActivityPresenter(this)
-        presenter?.initViews()
+        initViews()
     }
 
     private fun findViews() {
         tabLayout = findViewById(R.id.tabLayout)
-    }
-
-    private fun getData() {
-        Log.d(tag, "start getData")
-
-        disposable = ServiceBuilder.create()
-            .getCatalog("elastic", 0)
-            .compose(ObserverHelper.applyHelper())
-            .subscribe(
-                { response -> Log.d(tag, "response: ${response.results.size}") },
-                { error -> Log.e(tag, "error: $error") },
-                { Log.d(tag, "completed request") }
-            )
+        toolbar = findViewById(R.id.customToolbar)
+        contentPager = findViewById(R.id.contentPager)
     }
 
     override fun onPause() {
@@ -53,15 +47,45 @@ class MainActivity : AppCompatActivity(), MainActivityContractor.View {
         disposable?.dispose()
     }
 
-    override fun initViews() {
-        tabLayout.setBackgroundColor(getColor(R.color.colorPrimary))
-        tabLayout.setTabTextColors(Color.GRAY, Color.WHITE)
-        teams.forEach { team -> tabLayout.addTab(getNewTab(team)) }
+    private fun initViews() {
+        setupActionBar()
+        setupTabLayout()
+        setupViewPager()
     }
 
-    private fun getNewTab(tabName: String): TabLayout.Tab {
-        return tabLayout.newTab()
-            .setText(tabName)
+    private fun setupActionBar() {
+        val spannedRed = SpannableString("Red")
+        spannedRed.setSpan(
+            ForegroundColorSpan(Color.WHITE),
+            0,
+            spannedRed.length,
+            Spanned.SPAN_INCLUSIVE_INCLUSIVE
+        )
 
+        val spannedSo = SpannableString("So")
+        spannedSo.setSpan(
+            ForegroundColorSpan(Color.RED),
+            0,
+            spannedSo.length,
+            Spanned.SPAN_INCLUSIVE_INCLUSIVE
+        )
+
+        val toolbarText = toolbar.findViewById<TextView>(R.id.toolbarText)
+        toolbarText.text = SpannableStringBuilder().append(spannedRed).append(spannedSo)
+        setSupportActionBar(toolbar)
+    }
+
+    private fun setupTabLayout() {
+        tabLayout.setBackgroundColor(getColor(R.color.colorPrimary))
+        tabLayout.setTabTextColors(Color.GRAY, Color.WHITE)
+        tabLayout.setupWithViewPager(contentPager)
+        tabLayout.isTabIndicatorFullWidth = false
+
+        teams.forEach { team -> tabLayout.addTab(tabLayout.newTab().setText(team)) }
+    }
+
+    private fun setupViewPager() {
+        val contentPagerAdapter = ContentPagerAdapter(supportFragmentManager, teams)
+        contentPager.adapter = contentPagerAdapter
     }
 }

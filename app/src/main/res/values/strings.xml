@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">RedSo</string>
+    <string name="image_description_avatar">Avatar</string>
+    <string name="image_description_banner">Banner</string>
 </resources>

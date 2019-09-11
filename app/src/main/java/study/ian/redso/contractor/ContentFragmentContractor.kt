@@ -1,13 +1,12 @@
 package study.ian.redso.contractor
 
-interface MainActivityContractor {
+interface ContentFragmentContractor {
 
     interface Presenter {
-
     }
 
     interface View {
-        fun initViews()
+        fun initViews(contentType: String?)
     }
 
     interface Model {
