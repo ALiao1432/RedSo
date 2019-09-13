@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <dimen name="holder_content_margin">14dp</dimen>
-    <dimen name="holder_content_text_size">20sp</dimen>
+    <dimen name="holder_content_margin">10dp</dimen>
+    <dimen name="holder_content_text_size">16sp</dimen>
+    <dimen name="holder_content_avatar_width_height">100dp</dimen>
+
+    <integer name="animation_list_show_duration">240</integer>
 
 </resources>

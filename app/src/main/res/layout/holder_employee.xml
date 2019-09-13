@@ -2,14 +2,14 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/holder_layout"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@android:color/black">
+    android:layout_height="wrap_content">
 
     <ImageView
         android:id="@+id/avatarView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/holder_content_avatar_width_height"
+        android:layout_height="@dimen/holder_content_avatar_width_height"
         android:layout_marginStart="@dimen/holder_content_margin"
         android:layout_marginTop="@dimen/holder_content_margin"
         android:layout_marginBottom="@dimen/holder_content_margin"
@@ -46,7 +46,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/holder_content_margin"
         android:layout_marginEnd="@dimen/holder_content_margin"
+        android:layout_marginBottom="@dimen/holder_content_margin"
         android:singleLine="false"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@id/nameText"
         app:layout_constraintTop_toBottomOf="@id/positionText"

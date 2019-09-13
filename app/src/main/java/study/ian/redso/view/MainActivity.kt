@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var tabLayout: TabLayout
     private lateinit var toolbar: Toolbar
     private lateinit var contentPager: ViewPager
-    private var teams = arrayOf("Rangers", "Elastic", "Dynamo")
+    private var teams = arrayOf("rangers", "elastic", "dynamo")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,6 +54,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupActionBar() {
+        toolbar.title = ""
+
         val spannedRed = SpannableString("Red")
         spannedRed.setSpan(
             ForegroundColorSpan(Color.WHITE),
@@ -61,7 +63,6 @@ class MainActivity : AppCompatActivity() {
             spannedRed.length,
             Spanned.SPAN_INCLUSIVE_INCLUSIVE
         )
-
         val spannedSo = SpannableString("So")
         spannedSo.setSpan(
             ForegroundColorSpan(Color.RED),
@@ -69,7 +70,6 @@ class MainActivity : AppCompatActivity() {
             spannedSo.length,
             Spanned.SPAN_INCLUSIVE_INCLUSIVE
         )
-
         val toolbarText = toolbar.findViewById<TextView>(R.id.toolbarText)
         toolbarText.text = SpannableStringBuilder().append(spannedRed).append(spannedSo)
         setSupportActionBar(toolbar)
@@ -87,5 +87,6 @@ class MainActivity : AppCompatActivity() {
     private fun setupViewPager() {
         val contentPagerAdapter = ContentPagerAdapter(supportFragmentManager, teams)
         contentPager.adapter = contentPagerAdapter
+        contentPager.offscreenPageLimit = 2
     }
 }
