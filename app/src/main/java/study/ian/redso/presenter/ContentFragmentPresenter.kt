@@ -15,7 +15,6 @@ class ContentFragmentPresenter(_view: ContentFragmentContractor.View) :
     private val model = ContentFragmentModel()
     private val compositeDisposable = CompositeDisposable()
     private val view = _view
-    private val loadMoreThreshold = 20
     private var isLoading = false
     private var page = 0
 
@@ -64,6 +63,8 @@ class ContentFragmentPresenter(_view: ContentFragmentContractor.View) :
     }
 
     override fun recyclerViewScrolled(lastItem: Int, totalItem: Int, team: String) {
+        val loadMoreThreshold = 20
+
         if (!isLoading && (lastItem + loadMoreThreshold) >= totalItem) {
             getCatalog(team, false)
         }
