@@ -1,5 +1,6 @@
 package study.ian.redso.util
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,6 +21,8 @@ private const val IMG_LOAD_DURATION = 300
 
 class ContentRecyclerViewAdapter :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
+    private val tag = "ContentRecyclerViewAdapter"
 
     private var resultList = ArrayList<Result>()
 
