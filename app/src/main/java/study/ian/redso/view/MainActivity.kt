@@ -11,7 +11,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
-import io.reactivex.disposables.Disposable
 import study.ian.redso.R
 import study.ian.redso.service.ServiceBuilder
 import study.ian.redso.util.ContentPagerAdapter
@@ -20,7 +19,6 @@ class MainActivity : AppCompatActivity() {
 
     private val tag = "MainActivity"
 
-    private var disposable: Disposable? = null
     private lateinit var tabLayout: TabLayout
     private lateinit var toolbar: Toolbar
     private lateinit var contentPager: ViewPager
@@ -40,11 +38,6 @@ class MainActivity : AppCompatActivity() {
         tabLayout = findViewById(R.id.tabLayout)
         toolbar = findViewById(R.id.customToolbar)
         contentPager = findViewById(R.id.contentPager)
-    }
-
-    override fun onPause() {
-        super.onPause()
-        disposable?.dispose()
     }
 
     private fun initViews() {

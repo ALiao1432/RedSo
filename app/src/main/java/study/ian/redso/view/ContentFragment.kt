@@ -93,15 +93,9 @@ class ContentFragment : Fragment(), ContentFragmentContractor.View {
 
         contentRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                Log.d(tag, "onScrollStateChanged: state: $newState")
-
                 val lastVisibleItem = layoutManager.findLastVisibleItemPosition()
                 val totalItems = layoutManager.itemCount
                 presenter.recyclerViewScrolled(lastVisibleItem, totalItems, teamType!!)
-            }
-
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                Log.d(tag, "onScrolled: dx: $dx, dy: $dy")
             }
         })
     }
